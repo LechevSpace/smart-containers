@@ -4,15 +4,12 @@
 use hal::timer::{self, Timer};
 use nrf52840_dk_bsp::{hal, prelude::*, Board};
 
-#[allow(unused_imports)]
-use panic_semihosting as _; // logs messages to the host stderr; requires a debugger
-
-use cortex_m_semihosting::{debug, hprintln};
 use rtic::app;
 // use hal::{gpio::Level, prelude::{InputPin, OutputPin}};
 
 // pick a panicking behavior
-// use panic_halt as _; // you can put a breakpoint on `rust_begin_unwind` to catch panics
+use panic_halt as _;
+use rtt_target::rprintln; // you can put a breakpoint on `rust_begin_unwind` to catch panics
 // use panic_abort as _; // requires nightly
 // use panic_itm as _; // logs messages over ITM; requires ITM support
 
@@ -23,22 +20,21 @@ use rtic::app;
 const APP: () = {
     #[init]
     fn init(cx: init::Context) {
+        rtt_target::rtt_init_print!();
+        rprintln!("Starting target.");
+        
         // Cortex-M peripherals
         let _core: cortex_m::Peripherals = cx.core;
 
         // Device specific peripherals
         let _device: hal::pac::Peripherals = cx.device;
 
-        hprintln!("init").unwrap();
-
-        debug::exit(debug::EXIT_SUCCESS);
+        
     }
 
     #[idle]
     fn idle(_: idle::Context) -> ! {
-        hprintln!("idle").unwrap();
-
-        debug::exit(debug::EXIT_SUCCESS);
+        rprintln!("idle.");
 
         let mut nrf52 = Board::take().unwrap();
 
@@ -55,10 +51,10 @@ const APP: () = {
         // let p = hal::pac::Peripherals::take().unwrap();
 
         // let port0 = hal::gpio::p0::Parts::new(p.P0);
-        // let button = port0.p0_13.into_pullup_input();
-        // let mut led = port0.p0_17.into_push_pull_output(Level::Low);
+        // let button = port0.p0_11.into_pullup_input();
+        // let mut led = port0.p0_31.into_push_pull_output(Level::Low);
 
-        // hprintln!("Blinky button demo starting").unwrap();
+        // rprintln!("Blinky button demo starting");
         // loop {
         //     if button.is_high().unwrap() {
         //         led.set_high().unwrap();

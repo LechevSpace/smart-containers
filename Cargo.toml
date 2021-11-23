@@ -12,17 +12,23 @@ version = "0.1.0"
 [dependencies]
 cortex-m = "0.6.0"
 cortex-m-rt = "0.6.10"
-cortex-m-semihosting = "0.3.3"
 cortex-m-rtic = "0.5.9"
-panic-semihosting = "0.5"
 
-# panic-halt = "0.2.0"
+panic-halt = "0.2.0"
 nb = "1.0.0"
 
-# nrf52840-pac = "0.10"
-# nrf52840-hal = { version = "0.14", optional = true }
 nrf52840-hal = { version = "0.14" }
 nrf52840-dk-bsp = { version = "0.2" }
+
+# probe-rs = "0.11"
+
+[dependencies.panic-rtt-target]
+version = "0.1.1"
+features = ["cortex-m"]
+
+[dependencies.rtt-target]
+version = "0.3.0"
+features = ["cortex-m"]
 
 # Uncomment for the panic example.
 # panic-itm = "0.4.1"
