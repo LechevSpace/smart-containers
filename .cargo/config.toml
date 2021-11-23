@@ -1,5 +1,5 @@
-  # [target.thumbv7em-none-eabihf]
-  # runner = "arm-none-eabi-gdb -tui"
+# [target.thumbv7em-none-eabihf]
+# runner = "arm-none-eabi-gdb -tui"
 
 [target.thumbv7m-none-eabi]
 # uncomment this to make `cargo run` execute programs on QEMU
