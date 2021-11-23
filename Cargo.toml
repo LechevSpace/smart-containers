@@ -14,10 +14,9 @@ cortex-m = "0.6.0"
 cortex-m-rt = "0.6.10"
 cortex-m-rtic = "0.5.9"
 
-panic-halt = "0.2.0"
 nb = "1.0.0"
 
-nrf52840-hal = { version = "0.14" }
+# nrf52840-hal = { version = "0.14" }
 nrf52840-dk-bsp = { version = "0.2" }
 
 # probe-rs = "0.11"

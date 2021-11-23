@@ -2,13 +2,13 @@
 #![no_main]
 
 use hal::timer::{self, Timer};
-use nrf52840_dk_bsp::{hal, prelude::*, Board};
+use nrf52840_dk_bsp::{Board, hal::{self, gpio::Level}, prelude::*};
 
 use rtic::app;
 // use hal::{gpio::Level, prelude::{InputPin, OutputPin}};
 
 // pick a panicking behavior
-use panic_halt as _;
+use panic_rtt_target as _;
 use rtt_target::rprintln; // you can put a breakpoint on `rust_begin_unwind` to catch panics
 // use panic_abort as _; // requires nightly
 // use panic_itm as _; // logs messages over ITM; requires ITM support
@@ -16,20 +16,18 @@ use rtt_target::rprintln; // you can put a breakpoint on `rust_begin_unwind` to 
 // #[cfg(feature = "52840")]
 // use nrf52840_hal as hal;
 
-#[app(device = crate::hal::pac, peripherals = true)]
+#[app(device = crate::hal::pac, peripherals = false)]
 const APP: () = {
     #[init]
-    fn init(cx: init::Context) {
+    fn init(_: init::Context) {
         rtt_target::rtt_init_print!();
         rprintln!("Starting target.");
         
         // Cortex-M peripherals
-        let _core: cortex_m::Peripherals = cx.core;
+        // let _core: cortex_m::Peripherals = cx.core;
 
         // Device specific peripherals
-        let _device: hal::pac::Peripherals = cx.device;
-
-        
+        // let _device: hal::pac::Peripherals = cx.device;
     }
 
     #[idle]
@@ -40,6 +38,7 @@ const APP: () = {
 
         let mut timer = Timer::new(nrf52.TIMER0);
 
+        rprintln!("Blinky button demo starting");
         // Alternately flash the red and blue leds
         loop {
             nrf52.leds.led_2.enable();
